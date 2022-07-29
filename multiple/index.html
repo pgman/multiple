@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<title>2桁の掛け算</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js/multiple.js"></script>
+<script>
+$(() => {
+    let allCount = 0,
+        outOfLogicCount = 0;
+        logic1Count = 0,
+        logic2Count = 0,
+        logic3Count = 0,
+        logic4Count = 0,
+        logic5Count = 0,
+        logic6Count = 0,
+        logic7Count = 0;
+    for(let num0 = 2; num0 <= 99; num0 += 1) {
+        for(let num1 = 10; num1 <= 99; num1 += 1) {
+            if(num0 > num1) { continue; }
+            allCount += 1;
+            let successFlag = false;
+            const diffs = [ 
+                [-3, 0], [-2, 0], [-1, 0], [0, 0], [1, 0], [2, 0], [3, 0],
+                [0, -3], [0, -2], [0, -1], [0, 1], [0, 2], [0, 3] 
+            ];
+            diffs.forEach(diff => {
+
+                //if(successFlag) { return; }
+
+                const newNum0 = num0 + diff[0],
+                    newNum1 = num1 + diff[1];
+
+                if(Multiple.is1stPlaceSum10(newNum0, newNum1)) {
+                    logic1Count += 1;
+                    successFlag = true;
+                }
+                
+                if(Multiple.isSquare(newNum0, newNum1)) {
+                    logic2Count += 1;
+                    successFlag = true;
+                } 
+
+                if(Multiple.is1stPlace(newNum0, newNum1)) {
+                    logic3Count += 1;
+                    successFlag = true;
+                }
+                
+                if(Multiple.is1stPlaceEquals0(newNum0, newNum1)) {
+                    logic4Count += 1;
+                    successFlag = true;
+                } 
+
+                if(Multiple.isExponentiationOf2(newNum0, newNum1)) {
+                    logic5Count += 1;
+                    successFlag = true;
+                } 
+
+                if(Multiple.isSame1st2ndPlace(newNum0, newNum1)) {
+                    logic6Count += 1;
+                    successFlag = true;
+                } 
+
+                if(Multiple.isEqual25(newNum0, newNum1)) {
+                    logic7Count += 1;
+                    successFlag = true;
+                } 
+            });   
+            
+            if(!successFlag) {
+                outOfLogicCount += 1;
+                console.log(`out: ${num0} x ${num1}`);
+            }
+        }
+    }
+
+    console.log('allCount', allCount);
+    console.log('logic1Count', logic1Count);
+    console.log('logic2Count', logic2Count);
+    console.log('logic3Count', logic3Count);
+    console.log('logic4Count', logic4Count);
+    console.log('logic5Count', logic5Count);
+    console.log('logic6Count', logic6Count);
+    console.log('logic7Count', logic7Count);
+    console.log('outOfLogicCount', outOfLogicCount);
+});
+/*
+
+4: 因数をキリの良い数字にする(10 * n + 8, 10 * n + 9, 10 * n + 1, 10 * n + 2)
+ex. 39 x 13 = (40 - 1) x 13 = 520 - 13 = 507
+
+5. １０台(２桁で２０未満)の数値どうしの掛け算を簡単に計算できます。
+https://keisan.casio.jp/exec/system/1190880052
+*/
+</script>
+</head>
+<body>
+</body>
+</html>
